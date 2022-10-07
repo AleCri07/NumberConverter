@@ -1,14 +1,12 @@
+# import tkinter
 from tkinter import *
 
+# variables
 global Atitle, Asubtitle, Aopt1, Aopt2, Aopt3, Aopt4, Anext, Aprev
-firstSelect = None
+firstSelect,currentSelect,b1,b2,numb,convNumb,syntaxError = None,None,None,None,None,None,None
 currentStage = "main"
-currentSelect = None
-b1 = None
-b2 = None
-numb = None
-convNumb = None
 
+# this function changes the number base to decimal
 def toDec(n,b):
     e = 0
     f = 0
@@ -16,37 +14,37 @@ def toDec(n,b):
     n1,n2,n3 = None,None,None
     h = None
     for i in range(len(n)):
-        if n[len(n)-i-1] == 'A':
+        if n[len(n)-i-1].lower() == 'a':
             n1 = n[0:len(n)-i-2]
             n2 = '10'
             n3 = n[len(n)-i:len(n)-(len(n)-i)]
             n = f'{n1}{n2}{n3}'
             h = True
-        elif n[len(n)-i-1] == 'B':
+        elif n[len(n)-i-1].lower() == 'b':
             n1 = n[0:len(n)-i-2]
             n2 = '11'
             n3 = n[len(n)-i:len(n)-(len(n)-i)]
             n = f'{n1}{n2}{n3}'
             h = True
-        elif n[len(n)-i-1] == 'C':
+        elif n[len(n)-i-1].lower() == 'c':
             n1 = n[0:len(n)-i-2]
             n2 = '12'
             n3 = n[len(n)-i:len(n)-(len(n)-i)]
             n = f'{n1}{n2}{n3}'
             h = True
-        elif n[len(n)-i-1] == 'D':
+        elif n[len(n)-i-1].lower() == 'd':
             n1 = n[0:len(n)-i-2]
             n2 = '13'
             n3 = n[len(n)-i:len(n)-(len(n)-i)]
             n = f'{n1}{n2}{n3}'
             h = True
-        elif n[len(n)-i-1] == 'E':
+        elif n[len(n)-i-1].lower() == 'e':
             n1 = n[0:len(n)-i-2]
             n2 = '14'
             n3 = n[len(n)-i:len(n)-(len(n)-i)]
             n = f'{n1}{n2}{n3}'
             h = True
-        elif n[len(n)-i-1] == 'F':
+        elif n[len(n)-i-1].lower() == 'f':
             n1 = n[0:len(n)-i-2]
             n2 = '15'
             n3 = n[len(n)-i:len(n)-(len(n)-i)]
@@ -62,6 +60,8 @@ def toDec(n,b):
         e += 1
         f += nc
     return f
+
+# this function converts a number from the decimal base to another base
 def decTo(n,b):
     r = ''
     f = ''
@@ -88,34 +88,35 @@ def decTo(n,b):
     f = r[::-1]
     return f
 
+# create the menu stage
 def main():
+
+    # global variables
     global currentStage,currentSelect,b1,b2,numb,convNumb
-    global Atitle, Asubtitle, Aopt1, Aopt2, Aopt3, Aopt4, Anext, Aprev
-    # titolo
+    global Atitle, Aopt1, Aopt2, Aopt3
+
+    # tittle
     Atitle = Label(root, text="CONVERTITORE", background="#505050",foreground="white", font='Helvetica 12 bold')
     Atitle.pack(padx=100, pady=30, fill=BOTH, expand=True, side=TOP)
 
-
-    # opzioni
-    Aopt1 = Button(root, text="CONVERTI", background="#303030",foreground="white", font='Helvetica 10 bold', command=bBin)
+    # options
+    Aopt1 = Button(root, text="CONVERTI", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next)
     Aopt1.pack(padx=100, pady=(40,0), fill=BOTH, expand=True)
 
-    Aopt2 = Button(root, text="HELP", background="#303030",foreground="white", font='Helvetica 10 bold', command=bOtt)
+    Aopt2 = Button(root, text="HELP", background="#303030",foreground="white", font='Helvetica 10 bold')
     Aopt2.pack(padx=100, pady=0, fill=BOTH, expand=True)
 
-    Aopt3 = Button(root, text="RICONOSCIMENTI", background="#303030",foreground="white", font='Helvetica 10 bold', command=bDec)
+    Aopt3 = Button(root, text="RICONOSCIMENTI", background="#303030",foreground="white", font='Helvetica 10 bold')
     Aopt3.pack(padx=100, pady=(0,40), fill=BOTH, expand=True)
 
 
-    # stage change
-    Aprev = Button(root, text="PREV", background="#404040",foreground="white", font='Helvetica 10 bold', command=Prev, activebackground='#404040', activeforeground='white')
-    Aprev.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
-
-    Anext = Button(root, text="NEXT", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next)
-    Anext.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
+# this function selects the first number base
 def selectFirstBase():
+
+    # global variables
     global currentStage,currentSelect,b1,b2,numb,convNumb
     global Atitle, Asubtitle, Aopt1, Aopt2, Aopt3, Aopt4, Anext, Aprev
+
     # title
     Atitle = Label(root, text="CONVERTITORE", background="#505050",foreground="white", font='Helvetica 12 bold')
     Atitle.pack(padx=100, pady=(30,0), fill=BOTH, expand=True, side=TOP)
@@ -125,29 +126,31 @@ def selectFirstBase():
     Asubtitle.pack(padx=100, pady=(0,30), fill=BOTH, expand=True, side=TOP)
 
 
-    # opt
-    Aopt1 = Button(root, text="BINARIO", background="#303030",foreground="white", font='Helvetica 10 bold', command=bBin)
+    # options
+    Aopt1 = Button(root, text="BINARIO", background="#303030",foreground="white", font='Helvetica 10 bold', command=b1Bin)
     Aopt1.pack(padx=100, pady=0, fill=BOTH, expand=True)
 
-    Aopt2 = Button(root, text="OTTALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=bOtt)
+    Aopt2 = Button(root, text="OTTALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=b1Oct)
     Aopt2.pack(padx=100, pady=0, fill=BOTH, expand=True)
 
-    Aopt3 = Button(root, text="DECIMALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=bDec)
+    Aopt3 = Button(root, text="DECIMALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=b1Dec)
     Aopt3.pack(padx=100, pady=0, fill=BOTH, expand=True)
 
-    Aopt4 = Button(root, text="ESADECIMALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=bHex)
+    Aopt4 = Button(root, text="ESADECIMALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=b1Hex)
     Aopt4.pack(padx=100, pady=(0, 30), fill=BOTH, expand=True)
 
 
-    # stage change
-    Aprev = Button(root, text="PREV", background="#303030",foreground="white", font='Helvetica 10 bold', command=Prev)
+    # scrolls to stages
+    Aprev = Button(root, text="MENU", background="#303030",foreground="white", font='Helvetica 10 bold', command=menu)
     Aprev.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
 
-    Anext = Button(root, text="NEXT", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next)
-    Anext.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
+# this function selects the second number base
 def selectSecondBase():
+
+    # global variables
     global currentStage,currentSelect,b1,b2,numb,convNumb
     global Atitle, Asubtitle, Aopt1, Aopt2, Aopt3, Aopt4, Anext, Aprev
+
     # title
     Atitle = Label(root, text="CONVERTITORE", background="#505050",foreground="white", font='Helvetica 12 bold')
     Atitle.pack(padx=100, pady=(30,0), fill=BOTH, expand=True, side=TOP)
@@ -157,29 +160,35 @@ def selectSecondBase():
     Asubtitle.pack(padx=100, pady=(0,30), fill=BOTH, expand=True, side=TOP)
 
 
-    # opt
-    Aopt1 = Button(root, text="BINARIO", background="#303030",foreground="white", font='Helvetica 10 bold', command=bBin1)
+    # options
+    Aopt1 = Button(root, text="BINARIO", background="#303030",foreground="white", font='Helvetica 10 bold', command=b2Bin)
     Aopt1.pack(padx=100, pady=0, fill=BOTH, expand=True)
 
-    Aopt2 = Button(root, text="OTTALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=bOtt1)
+    Aopt2 = Button(root, text="OTTALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=b2Oct)
     Aopt2.pack(padx=100, pady=0, fill=BOTH, expand=True)
 
-    Aopt3 = Button(root, text="DECIMALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=bDec1)
+    Aopt3 = Button(root, text="DECIMALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=b2Dec)
     Aopt3.pack(padx=100, pady=0, fill=BOTH, expand=True)
 
-    Aopt4 = Button(root, text="ESADECIMALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=bHex1)
+    Aopt4 = Button(root, text="ESADECIMALE", background="#303030",foreground="white", font='Helvetica 10 bold', command=b2Hex)
     Aopt4.pack(padx=100, pady=(0, 30), fill=BOTH, expand=True)
 
 
-    # stage change
-    Aprev = Button(root, text="PREV", background="#303030",foreground="white", font='Helvetica 10 bold', command=Prev)
+    # scrolls to stages
+    Aprev = Button(root, text="MENU", background="#303030",foreground="white", font='Helvetica 10 bold', command=menu)
     Aprev.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
 
-    Anext = Button(root, text="NEXT", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next)
+    Anext = Button(root, text="BACK", background="#303030",foreground="white", font='Helvetica 10 bold', command=Prev)
     Anext.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
+
+
+# this function creates the input stage of the number
 def digitNumb():
+
+    # global variables
     global currentStage,currentSelect,b1,b2,numb,convNumb
     global Atitle, Asubtitle, Aopt1, Aopt2, Aopt3, Aopt4, Anext, Aprev
+
     # title
     Atitle = Label(root, text="CONVERTITORE", background="#505050",foreground="white", font='Helvetica 12 bold')
     Atitle.pack(padx=100, pady=(30,0), fill=BOTH, expand=True, side=TOP)
@@ -189,19 +198,26 @@ def digitNumb():
     Asubtitle.pack(padx=100, pady=(0,30), fill=BOTH, expand=True, side=TOP)
 
 
-    # opt
+    # options
     Aopt1 = Entry(root, background="#303030", foreground="white",font='Helvetica 10 bold')
-    Aopt1.pack(padx=100, pady=87, fill=BOTH, expand=True)
+    Aopt1.pack(padx=100, pady=(30,10), fill=BOTH, expand=True)
+
+    Aopt2 = Button(root, text="CONVERTI", background="#303030", foreground="white",font='Helvetica 10 bold', command=Next)
+    Aopt2.pack(padx=100, pady=(10,30), fill=BOTH, expand=True)
 
 
 
-    # stage change
-    Aprev = Button(root, text="PREV", background="#303030",foreground="white", font='Helvetica 10 bold', command=Prev)
+    # scrolls to stages
+    Aprev = Button(root, text="MENU", background="#303030",foreground="white", font='Helvetica 10 bold', command=menu)
     Aprev.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
 
-    Anext = Button(root, text="NEXT", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next)
+    Anext = Button(root, text="BACK", background="#303030",foreground="white", font='Helvetica 10 bold', command=Prev)
     Anext.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
+
+# funzione che crea lo stage seeConvertedNumb
 def seeConvertedNumb():
+
+    # global variables
     global currentStage,currentSelect,b1,b2,numb,convNumb
     global Atitle, Asubtitle, Aopt1, Aopt2, Aopt3, Aopt4, Anext, Aprev
     # title
@@ -213,155 +229,455 @@ def seeConvertedNumb():
     Asubtitle.pack(padx=100, pady=(0,30), fill=BOTH, expand=True, side=TOP)
 
 
-    # opt
+    # options
     Aopt1 = Label(root, text=f"{convNumb}", background="#303030",foreground="white", font='Helvetica 10 bold')
     Aopt1.pack(padx=100, pady=86, fill=BOTH, expand=True)
 
 
-    # stage change
-    Aprev = Button(root, text="NEW CONV", background="#303030",foreground="white", font='Helvetica 10 bold', command=Prev)
+    # scrolls to stages
+    Aprev = Button(root, text="MENU", background="#303030",foreground="white", font='Helvetica 10 bold', command=menu)
     Aprev.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
 
-    #Anext = Button(root, text="NEXT", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next, activebackground='#404040', activeforeground='white')
-    #Anext.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
+    Anext = Button(root, text="NEW CONV", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next)
+    Anext.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
 
+# funzione per tornare al menu
+def menu():
+
+    # global variables
+    global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # cancella i widget esistenti
+    try: Atitle.destroy()
+    except: pass
+    try: Asubtitle.destroy()
+    except: pass
+    try: Aopt1.destroy()
+    except: pass
+    try: Aopt2.destroy()
+    except: pass
+    try: Aopt3.destroy()
+    except: pass
+    try: Aopt4.destroy()
+    except: pass
+    try: Aprev.destroy()
+    except: pass
+    try: Anext.destroy()
+    except: pass
+
+    # crea il menu
+    main()
+
+    # imposto lo stage menu come stage corrente
+    currentStage = "main"
+
+
+# funzione per tornare al campo precedente
 def Prev():
+
+    # global variables
     global currentStage,currentSelect,b1,b2,numb,convNumb
-    if currentStage == "main":
-        pass
-    elif currentStage == "selectFirstBase":
-        Atitle.destroy()
-        Asubtitle.destroy()
-        Aopt1.destroy()
-        Aopt2.destroy()
-        Aopt3.destroy()
-        Aopt4.destroy()
-        Aprev.destroy()
-        Anext.destroy()
+
+    # se lo stage corrente è selectFirstBase
+    if currentStage == "selectFirstBase":
+
+        # cancella i widget esistenti
+        try: Atitle.destroy()
+        except: pass
+        try: Asubtitle.destroy()
+        except: pass
+        try: Aopt1.destroy()
+        except: pass
+        try: Aopt2.destroy()
+        except: pass
+        try: Aopt3.destroy()
+        except: pass
+        try: Aopt4.destroy()
+        except: pass
+        try: Aprev.destroy()
+        except: pass
+        try: Anext.destroy()
+        except: pass
+
+        # crea il menu
         main()
+
+        # imposto lo stage menu come stage corrente
         currentStage = "main"
+    
+    # se lo stage corrente è selectSecondBase
     elif currentStage == "selectSecondBase":
-        Atitle.destroy()
-        Asubtitle.destroy()
-        Aopt1.destroy()
-        Aopt2.destroy()
-        Aopt3.destroy()
-        Aopt4.destroy()
-        Aprev.destroy()
-        Anext.destroy()
+
+        # cancella i widget esistenti
+        try: Atitle.destroy()
+        except: pass
+        try: Asubtitle.destroy()
+        except: pass
+        try: Aopt1.destroy()
+        except: pass
+        try: Aopt2.destroy()
+        except: pass
+        try: Aopt3.destroy()
+        except: pass
+        try: Aopt4.destroy()
+        except: pass
+        try: Aprev.destroy()
+        except: pass
+        try: Anext.destroy()
+        except: pass
+
+        # crea lo stage selectFirstBase
         selectFirstBase()
+
+        # imposto lo stage selectFirstBase come stage corrente
         currentStage = "selectFirstBase"
+    
+    # se lo stage corrente è digitNumb
     elif currentStage == "digitNumb":
-        Atitle.destroy()
-        Asubtitle.destroy()
-        Aopt1.destroy()
-        Aopt2.destroy()
-        Aopt3.destroy()
-        Aopt4.destroy()
-        Aprev.destroy()
-        Anext.destroy()
+
+        # cancella i widget esistenti
+        try: Atitle.destroy()
+        except: pass
+        try: Asubtitle.destroy()
+        except: pass
+        try: Aopt1.destroy()
+        except: pass
+        try: Aopt2.destroy()
+        except: pass
+        try: Aopt3.destroy()
+        except: pass
+        try: Aopt4.destroy()
+        except: pass
+        try: Aprev.destroy()
+        except: pass
+        try: Anext.destroy()
+        except: pass
+
+        # crea lo stage selectSecondBase
         selectSecondBase()
         currentStage = "selectSecondBase"
+    
+    # se lo stage corrente è seeConvertedNumb
     elif currentStage == "seeConvertedNumb":
-        Atitle.destroy()
-        Asubtitle.destroy()
-        Aopt1.destroy()
-        Aopt2.destroy()
-        Aopt3.destroy()
-        Aopt4.destroy()
-        Aprev.destroy()
-        Anext.destroy()
-        digitNumb()
-        currentStage = "digitNumb"
+
+        # cancella i widget esistenti
+        try: Atitle.destroy()
+        except: pass
+        try: Asubtitle.destroy()
+        except: pass
+        try: Aopt1.destroy()
+        except: pass
+        try: Aopt2.destroy()
+        except: pass
+        try: Aopt3.destroy()
+        except: pass
+        try: Aopt4.destroy()
+        except: pass
+        try: Aprev.destroy()
+        except: pass
+        try: Anext.destroy()
+        except: pass
+
+        # crea lo stage main
+        main()
+
+        # imposto lo stage main come stage corrente
+        currentStage = "main"
+
+# funzione per andare al campo successio
 def Next():
-    global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # global variables
+    global currentStage,currentSelect,b1,b2,numb,convNumb,syntaxError
+
+    # se lo stage corrente è main
     if currentStage == "main":
-        Atitle.destroy()
-        Aopt1.destroy()
-        Aopt2.destroy()
-        Aopt3.destroy()
-        Aprev.destroy()
-        Anext.destroy()
+
+        # cancella i widget esistenti
+        try: Atitle.destroy()
+        except: pass
+        try: Asubtitle.destroy()
+        except: pass
+        try: Aopt1.destroy()
+        except: pass
+        try: Aopt2.destroy()
+        except: pass
+        try: Aopt3.destroy()
+        except: pass
+        try: Aopt4.destroy()
+        except: pass
+        try: Aprev.destroy()
+        except: pass
+        try: Anext.destroy()
+        except: pass
+
+        # crea lo stage selectFirstBase
         selectFirstBase()
+
+        # imposto lo stage selectFirstBase come stage corrente
         currentStage = "selectFirstBase"
+
+    # se lo stage corrente è selectFirstBase
     elif currentStage == "selectFirstBase":
-        print(b1)
-        Atitle.destroy()
-        Asubtitle.destroy()
-        Aopt1.destroy()
-        Aopt2.destroy()
-        Aopt3.destroy()
-        Aopt4.destroy()
-        Aprev.destroy()
-        Anext.destroy()
+
+        # cancella i widget esistenti
+        try: Atitle.destroy()
+        except: pass
+        try: Asubtitle.destroy()
+        except: pass
+        try: Aopt1.destroy()
+        except: pass
+        try: Aopt2.destroy()
+        except: pass
+        try: Aopt3.destroy()
+        except: pass
+        try: Aopt4.destroy()
+        except: pass
+        try: Aprev.destroy()
+        except: pass
+        try: Anext.destroy()
+        except: pass
+
+        # crea lo stage selectSecondBase
         selectSecondBase()
+
+        # imposto lo stage selectSecondBase come stage corrente
         currentStage = "selectSecondBase"
+
+    # se lo stage corrente è selectSecondBase
     elif currentStage == "selectSecondBase":
-        Atitle.destroy()
-        Asubtitle.destroy()
-        Aopt1.destroy()
-        Aopt2.destroy()
-        Aopt3.destroy()
-        Aopt4.destroy()
-        Aprev.destroy()
-        Anext.destroy()
+
+        # cancella i widget esistenti
+        try: Atitle.destroy()
+        except: pass
+        try: Asubtitle.destroy()
+        except: pass
+        try: Aopt1.destroy()
+        except: pass
+        try: Aopt2.destroy()
+        except: pass
+        try: Aopt3.destroy()
+        except: pass
+        try: Aopt4.destroy()
+        except: pass
+        try: Aprev.destroy()
+        except: pass
+        try: Anext.destroy()
+        except: pass
+
+        # crea lo stage digitNumb
         digitNumb()
+
+        # imposto lo stage digitNumb come stage corrente
         currentStage = "digitNumb"
+
+    # se lo stage corrente è digitNumb
     elif currentStage == "digitNumb":
-        convNumb = Aopt1.get()
-        var = toDec(convNumb, b1)
-        convNumb = decTo(var, b2)
-        print(type(convNumb))
-        Atitle.destroy()
-        Asubtitle.destroy()
-        Aopt1.destroy()
-        Aopt2.destroy()
-        Aopt3.destroy()
-        Aopt4.destroy()
-        Aprev.destroy()
-        Anext.destroy()
-        seeConvertedNumb()
-        currentStage = "seeConvertedNumb"
+
+        # number to convert
+        numb = Aopt1.get()
+        if numb != "":
+            try:
+                if b1 == 2:
+                    for i in range(len(numb)):
+                        if int(numb[i]) < 2:
+                            syntaxError = False
+                        else:
+                            syntaxError = True
+                elif b1 == 8:
+                    for i in range(len(numb)):
+                        if int(numb[i]) < 8:
+                            syntaxError = False
+                        else:
+                            syntaxError = True
+                elif b1 == 10:
+                    for i in range(len(numb)):
+                        if int(numb[i]) < 10:
+                            syntaxError = False
+                        else:
+                            syntaxError = True
+                elif b1 == 16:
+                    for i in range(len(numb)):
+                        if numb[i].lower() == 'a' or numb[i].lower() == 'b' or numb[i].lower() == 'c' or numb[i].lower() == 'd' or numb[i].lower() == 'e' or numb[i].lower() == 'f' or int(numb[i]) < 10:
+                            syntaxError = False
+                        else:
+                            syntaxError = True
+                if syntaxError != True:
+                    # decimal number
+                    var = toDec(numb, b1)
+                    syntaxError = True
+                    # number converted
+                    convNumb = decTo(var, b2)
+                    syntaxError = False
+            except:
+                syntaxError = True
+
+            if syntaxError == False:
+
+                # cancella i widget esistenti
+                try: Atitle.destroy()
+                except: pass
+                try: Asubtitle.destroy()
+                except: pass
+                try: Aopt1.destroy()
+                except: pass
+                try: Aopt2.destroy()
+                except: pass
+                try: Aopt3.destroy()
+                except: pass
+                try: Aopt4.destroy()
+                except: pass
+                try: Aprev.destroy()
+                except: pass
+                try: Anext.destroy()
+                except: pass
+
+                # crea lo stage seeConvertedNumb
+                seeConvertedNumb()
+
+                # imposto lo stage seeConvertedNumb come stage corrente
+                currentStage = "seeConvertedNumb"
+                syntaxError = None
+    # se lo stage corrente è seeConvertedNumb
     elif currentStage == "seeConvertedNumb":
-        pass
 
-def bBin():
+        # cancella i widget esistenti
+        try: Atitle.destroy()
+        except: pass
+        try: Asubtitle.destroy()
+        except: pass
+        try: Aopt1.destroy()
+        except: pass
+        try: Aopt2.destroy()
+        except: pass
+        try: Aopt3.destroy()
+        except: pass
+        try: Aopt4.destroy()
+        except: pass
+        try: Aprev.destroy()
+        except: pass
+        try: Anext.destroy()
+        except: pass
+
+        # crea lo stage selectFirstBase
+        selectFirstBase()
+
+        # imposto lo stage selectFirstBase come stage corrente
+        currentStage = "selectFirstBase"
+
+# first base is binary
+def b1Bin():
+    
+    # global variables
     global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # set the first base to 2
     b1 = 2
-    
-def bOtt():
-    global currentStage,currentSelect,b1,b2,numb,convNumb
-    b1 = 8 
-def bDec():
-    global currentStage,currentSelect,b1,b2,numb,convNumb
-    b1 = 10 
-def bHex():
-    global currentStage,currentSelect,b1,b2,numb,convNumb
-    b1 = 16
-   
 
-def bBin1():
-    global currentStage,currentSelect,b1,b2,numb,convNumb
-    b2 = 2
-def bOtt1():
-    global currentStage,currentSelect,b1,b2,numb,convNumb
-    b2 = 8
-def bDec1():
-    global currentStage,currentSelect,b1,b2,numb,convNumb
-    b2 = 10
-def bHex1():
+    # scrolls to the next stage
+    Next()
+
+# first base is octal
+def b1Oct():
     
+    # global variables
     global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # set the first base to 8
+    b1 = 8
+
+    # scrolls to the next stage
+    Next()
+
+# first base is decimal
+def b1Dec():
+    
+    # global variables
+    global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # set the first base to 10
+    b1 = 10
+
+    # scrolls to the next stage
+    Next()
+
+# first base is hexadecimal
+def b1Hex():
+    
+    # global variables
+    global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # set the first base to 16
+    b1 = 16
+
+    # scrolls to the next stage
+    Next()
+
+# second base is binary
+def b2Bin():
+    
+    # global variables
+    global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # set the second base to 2
+    b2 = 2
+
+    # scrolls to the next stage
+    Next()
+
+# second base is octal
+def b2Oct():
+    
+    # global variables
+    global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # set the second base to 8
+    b2 = 8
+
+    # scrolls to the next stage
+    Next()
+
+# second base is decimal
+def b2Dec():
+    
+    # global variables
+    global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # set the second base to 10
+    b2 = 10
+
+    # scrolls to the next stage
+    Next()
+
+# second base is hexadecimal
+def b2Hex():
+    
+    # global variables
+    global currentStage,currentSelect,b1,b2,numb,convNumb
+
+    # set the second base to 16
     b2 = 16
 
+    # scrolls to the next stage
+    Next()
+
+# creates root
 root = Tk()
+
+# sets the title of the root
 root.title("Il nostro programma")
+
+# sets the size of the root
 root.geometry("600x400")
+
+# sets root not resizable
 root.resizable(False,False)
+
+# set the root color
 root.configure(bg='#414141')
 
-
-
+# main stage
 main()
 
+# starts loop
 root.mainloop()
