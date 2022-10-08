@@ -238,7 +238,7 @@ def seeConvertedNumb():
     Aprev = Button(root, text="MENU", background="#303030",foreground="white", font='Helvetica 10 bold', command=menu)
     Aprev.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
 
-    Anext = Button(root, text="NEW CONV", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next)
+    Anext = Button(root, text="CONVERTI DI NUOVO", background="#303030",foreground="white", font='Helvetica 10 bold', command=Next)
     Anext.pack(ipadx=10, ipady=10, fill=BOTH, expand=True, side=LEFT)
 
 # funzione per tornare al menu
